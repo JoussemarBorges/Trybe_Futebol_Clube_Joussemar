@@ -10,19 +10,19 @@ module.exports = {
       autoIncrement: true,
     },
     username: {
-      type: Sequelize.SRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     role: {
-      type: Sequelize.SRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     email: {
-      type: Sequelize.SRING,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     password: {
-      type: Sequelize.SRING,
+      type: Sequelize.STRING,
       allowNull: false,
     }
    });
