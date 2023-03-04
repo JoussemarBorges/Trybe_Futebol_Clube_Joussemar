@@ -3,6 +3,7 @@ import * as express from 'express';
 import ErrorHandler from './api/middleware/ErrorHandler';
 import loginRouter from './api/routers/Login';
 import teamsRouter from './api/routers/Team';
+import matchRouter from './api/routers/Match';
 
 class App {
   public app: express.Express;
@@ -21,6 +22,7 @@ class App {
   private routes(): void {
     this.app.use('/teams', teamsRouter);
     this.app.use('/login', loginRouter);
+    this.app.use('/matches', matchRouter);
   }
 
   private errorMiddleware() {
