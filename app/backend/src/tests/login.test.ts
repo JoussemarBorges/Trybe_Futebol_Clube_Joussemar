@@ -6,6 +6,7 @@ import chaiHttp = require('chai-http');
 import {app} from '../app';
 import {mockUserLogin, mockToken, inputLogin} from './mocks/mockLogin'
 import User from '../database/models/UsersModel';
+import * as JWT from 'jsonwebtoken'
 
 import { Response } from 'superagent';
 
@@ -41,10 +42,14 @@ describe('teste a falha da rota /login', () => {
 describe('Teste da rota /login', () => {
   beforeEach(async () => {
     sinon.stub(User, 'findOne').resolves(mockUserLogin);
+    sinon.stub(JWT, 'sign').resolves(mockToken)
+    sinon.stub(JWT, 'verify').resolves()
   })
 
   afterEach(()=> {
     (User.findOne as sinon.SinonStub).restore();
+    (JWT.sign as sinon.SinonStub).restore();
+    (JWT.verify as sinon.SinonStub).restore();
   })
 
   it('testa se o post na rota /login retorna o esperado', async () => {
@@ -53,7 +58,7 @@ describe('Teste da rota /login', () => {
     .send(inputLogin)
 
     expect(response.status).to.be.equal(200)
-    // expect(response.body).to.be.deep.equal({token: mockToken})
+    expect(response.body).to.be.deep.equal({token: mockToken})
   })
 
   it('teste se a rota /login/role retorne o role correto', async ()=> {
