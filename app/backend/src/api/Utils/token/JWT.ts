@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import MapError from '../../errors/mapError';
 
 class JWT {
   private _secret: string;
@@ -10,7 +11,15 @@ class JWT {
   }
 
   public tokenGenerate = (payload: object | null) => jwt
-    .sign({ payload }, this._secret, this._config);
+    .sign({ data: payload }, this._secret, this._config);
+
+  public tokenVerify = (token: string) => {
+    try {
+      return jwt.verify(token, this._secret) as jwt.JwtPayload;
+    } catch (error) {
+      throw new MapError('Token must be a valid token', '401');
+    }
+  };
 }
 
 export default JWT;

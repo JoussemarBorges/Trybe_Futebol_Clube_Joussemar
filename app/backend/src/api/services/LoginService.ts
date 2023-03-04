@@ -26,8 +26,14 @@ class LoginService {
       role: result.role,
     };
 
-    const token = { token: this.jwt.tokenGenerate(payload) };
-    return token;
+    const token = this.jwt.tokenGenerate(payload);
+    return { token };
+  }
+
+  getRole(authorization: string) {
+    const { data: { role } } = this.jwt.tokenVerify(authorization);
+
+    return { role };
   }
 }
 

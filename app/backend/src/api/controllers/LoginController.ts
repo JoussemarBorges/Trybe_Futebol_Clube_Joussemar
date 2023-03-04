@@ -15,6 +15,14 @@ class LoginController {
 
     return res.status(200).json(result);
   }
+
+  getRole(req: Request, res: Response) {
+    const { authorization } = req.headers;
+    if (!authorization) throw new MapError('Token not found', '401');
+    const role = this.loginService.getRole(authorization);
+
+    return res.status(200).json(role);
+  }
 }
 
 export default LoginController;
