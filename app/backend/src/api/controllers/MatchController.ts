@@ -14,6 +14,13 @@ class MatcheController {
     const result = await this.matchService.getAllMatches();
     return res.status(200).json(result);
   }
+
+  async finishMatche(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    await this.matchService.finishMatche(Number(id));
+
+    return res.status(200).json({ message: 'Finished' });
+  }
 }
 
 export default MatcheController;

@@ -25,6 +25,12 @@ class MatchService {
     });
     return result;
   }
+
+  async finishMatche(id: number): Promise<number[] | undefined> {
+    const result = await this.model.update({ inProgress: false }, { where: { id } });
+
+    return result;
+  }
 }
 
 export default MatchService;
