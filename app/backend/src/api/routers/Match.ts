@@ -11,4 +11,7 @@ matchRouter.patch('/:id/finish', verify, (req: Request, res: Response) =>
 matchRouter.patch('/:id', verify, (req: Request, res: Response) =>
   matchController.editMatche(req, res));
 
+matchRouter.post('/', verify, (req: Request, res: Response) =>
+  matchController.createMatch(req, res));
+
 export default matchRouter;

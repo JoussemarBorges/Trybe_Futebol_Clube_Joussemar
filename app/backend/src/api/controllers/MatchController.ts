@@ -28,6 +28,14 @@ class MatcheController {
 
     return res.status(200).json({ message: 'Placar Alterado com sucesso', result });
   }
+
+  async createMatch(req: Request, res: Response): Promise<Response> {
+    const { body } = req;
+
+    const newMatch = await this.matchService.createMatch(body);
+
+    return res.status(201).json(newMatch);
+  }
 }
 
 export default MatcheController;
