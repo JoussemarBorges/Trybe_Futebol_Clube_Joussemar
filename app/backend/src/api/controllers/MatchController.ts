@@ -21,6 +21,13 @@ class MatcheController {
 
     return res.status(200).json({ message: 'Finished' });
   }
+
+  async editMatche(req: Request, res: Response): Promise<Response> {
+    const { params: { id }, body } = req;
+    const result = await this.matchService.editMatche(Number(id), body);
+
+    return res.status(200).json({ message: 'Placar Alterado com sucesso', result });
+  }
 }
 
 export default MatcheController;

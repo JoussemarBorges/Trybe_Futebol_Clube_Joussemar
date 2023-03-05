@@ -1,6 +1,7 @@
 import { ModelStatic } from 'sequelize';
 import Team from '../../database/models/TeamsModel';
 import Matche from '../../database/models/MatchersModel';
+import { IbodyEditMatche } from '../interfaces/IBodyMatcheEdit';
 
 class MatchService {
   model: ModelStatic<Matche> = Matche;
@@ -29,6 +30,18 @@ class MatchService {
   async finishMatche(id: number): Promise<number[] | undefined> {
     const result = await this.model.update({ inProgress: false }, { where: { id } });
 
+    return result;
+  }
+
+  async editMatche(id: number, body: IbodyEditMatche): Promise<number[]> {
+    const result = await this.model
+      .update(
+        {
+          homeTeamGoals: body.homeTeamGoals,
+          awayTeamGoals: body.awayTeamGoals,
+        },
+        { where: { id } },
+      );
     return result;
   }
 }
