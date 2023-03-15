@@ -26,7 +26,7 @@ class LeaderBoardService {
     return matches;
   }
 
-  leaderBoard = async (matches: Matche[], teams: Team[], path: 'home' | 'away') => {
+  leaderBoard = async (teams: Team[], path: 'home' | 'away') => {
     const leaderBoard = await Promise.all(teams.map(async (team) => ({
       name: team.teamName,
       totalPoints: await getTotalPoints(team.id, path),
@@ -44,11 +44,11 @@ class LeaderBoardService {
   };
 
   async getLeaderBoard(path: 'home' | 'away') {
-    const allMatches = await this.getFinishedMatches();
+    // const allMatches = await this.getFinishedMatches();
 
     const allTeams = await this.modelTeam.findAll();
 
-    const leaderBoard = await this.leaderBoard(allMatches, allTeams, path);
+    const leaderBoard = await this.leaderBoard(allTeams, path);
 
     return leaderBoard.sort((a, b) => +(b.totalPoints - a.totalPoints)
     || +(b.totalVictories - a.totalVictories)
