@@ -1,7 +1,17 @@
 import { ModelStatic } from 'sequelize';
 import Matche from '../../database/models/MatchersModel';
 import Team from '../../database/models/TeamsModel';
-import { getTotalMatches, getTotalDraws } from '../Utils/CalculatePoins';
+import {
+  getTotalMatches,
+  getTotalDraws,
+  getTotalWins,
+  getTotalLosses,
+  getTotalGoalsFavor,
+  getTotalGoalsOwn,
+  getGoalsBalance,
+  getTotalPoints,
+  getEfficiency,
+} from '../Utils/QuerysToLeaderBoard';
 // import calculatePoints from '../Utils/CalculatePoins';
 
 class LeaderBoardService {
@@ -19,17 +29,16 @@ class LeaderBoardService {
   leaderBoard = async (matches: Matche[], teams: Team[], path: 'home' | 'away') => {
     const leaderBoard = await Promise.all(teams.map(async (team) => ({
       name: team.teamName,
-      totalPoints: 0,
+      totalPoints: await getTotalPoints(team.id, path),
       totalGames: await getTotalMatches(team.id, path),
-      totalVictories: 0,
-      totalDraws: getTotalDraws(team.id, path),
-      totalLosses: 0,
-      goalsFavor: 0,
-      goalsOwn: 0,
-      goalsBalance: 0,
-      efficiency: 0,
+      totalVictories: await getTotalWins(team.id, path),
+      totalDraws: await getTotalDraws(team.id, path),
+      totalLosses: await getTotalLosses(team.id, path),
+      goalsFavor: await getTotalGoalsFavor(team.id, path),
+      goalsOwn: await getTotalGoalsOwn(team.id, path),
+      goalsBalance: await getGoalsBalance(team.id, path),
+      efficiency: await getEfficiency(team.id, path),
     })));
-    console.log(path);
 
     return leaderBoard;
   };
@@ -39,9 +48,13 @@ class LeaderBoardService {
 
     const allTeams = await this.modelTeam.findAll();
 
-    const leaderBoard = this.leaderBoard(allMatches, allTeams, path);
+    const leaderBoard = await this.leaderBoard(allMatches, allTeams, path);
 
-    return leaderBoard;
+    return leaderBoard.sort((a, b) => +(b.totalPoints - a.totalPoints)
+    || +(b.totalVictories - a.totalVictories)
+    || +(b.goalsBalance - a.goalsBalance)
+    || +(b.goalsFavor - a.goalsFavor)
+    || +(a.goalsOwn - b.goalsOwn));
   }
 }
 
