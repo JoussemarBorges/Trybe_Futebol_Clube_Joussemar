@@ -80,7 +80,7 @@ async function getTotalGoalsFavor(teamId: number, path:'home' | 'away') {
 async function getTotalGoalsOwn(teamId: number, path:'home' | 'away') {
   const inversePath = path === 'home' ? 'away' : 'home';
   const goalsOwn = Matche.sum(`${inversePath}_Team_Goals`, {
-    where: { [`${inversePath}TeamId`]: teamId, inProgress: false },
+    where: { [`${path}TeamId`]: teamId, inProgress: false },
   });
 
   return goalsOwn;
