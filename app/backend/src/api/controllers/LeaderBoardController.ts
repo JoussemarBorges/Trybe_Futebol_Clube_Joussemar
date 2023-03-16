@@ -7,7 +7,7 @@ class LeaderBoardController {
     const path: 'home' | 'away' = req.path.substring(1) as 'home' | 'away';
     const leaderboard = await this.leaderBoardService.getLeaderBoard(path);
 
-    return res.status(200).json({ matches: leaderboard });
+    return res.status(200).json(leaderboard);
   }
 }
 
