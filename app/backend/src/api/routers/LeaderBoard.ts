@@ -11,4 +11,7 @@ leaderBoardRouter.get('/home', (req: Request, res: Response) =>
 leaderBoardRouter.get('/away', (req: Request, res: Response) =>
   leaderBoardController.getTablePerformance(req, res));
 
+leaderBoardRouter.get('/', (req: Request, res: Response) =>
+  leaderBoardController.getOverallLeaderboard(req, res));
+
 export default leaderBoardRouter;

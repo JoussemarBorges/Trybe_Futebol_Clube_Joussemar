@@ -3,10 +3,7 @@ import Matche from '../../database/models/MatchersModel';
 // import MapError from '../errors/mapError';
 
 async function getTotalMatches(teamId: number, path: 'home' | 'away') {
-  const whereCondition = {
-    [`${path}TeamId`]: teamId,
-    inProgress: false,
-  };
+  const whereCondition = { [`${path}TeamId`]: teamId, inProgress: false };
 
   const { count } = await Matche.findAndCountAll({
     where: whereCondition,

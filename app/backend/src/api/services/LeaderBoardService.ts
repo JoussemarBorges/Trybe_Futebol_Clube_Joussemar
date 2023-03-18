@@ -1,6 +1,7 @@
 import { ModelStatic } from 'sequelize';
 import Matche from '../../database/models/MatchersModel';
 import Team from '../../database/models/TeamsModel';
+import { leaderboardTeam } from '../interfaces/ILeaderBoardTeam';
 import {
   getTotalMatches,
   getTotalDraws,
@@ -43,6 +44,36 @@ class LeaderBoardService {
     return leaderBoard;
   };
 
+  overallLeaderboard = (home: leaderboardTeam, away: leaderboardTeam): leaderboardTeam => {
+    const totalPoints = home.totalPoints + away.totalPoints;
+    const totalGames = home.totalGames + away.totalGames;
+    const leaderBoard = {
+      name: home.name,
+      totalPoints,
+      totalGames,
+      totalVictories: home.totalVictories + away.totalVictories,
+      totalDraws: home.totalDraws + away.totalDraws,
+      totalLosses: home.totalLosses + away.totalLosses,
+      goalsFavor: home.goalsFavor + away.goalsFavor,
+      goalsOwn: home.goalsOwn + away.goalsOwn,
+      goalsBalance:
+        (home.goalsFavor + away.goalsFavor) - (home.goalsOwn + away.goalsOwn),
+      efficiency: (((totalPoints) / (totalGames * 3)) * 100).toFixed(2),
+    };
+
+    return leaderBoard;
+  };
+
+  orderLeaderBoard = (leaderBoard: leaderboardTeam[]): leaderboardTeam[] => {
+    const sortLeaderBoard = leaderBoard.sort((a, b) => +(b.totalPoints - a.totalPoints)
+    || +(b.totalVictories - a.totalVictories)
+    || +(b.goalsBalance - a.goalsBalance)
+    || +(b.goalsFavor - a.goalsFavor)
+    || +(a.goalsOwn - b.goalsOwn));
+
+    return sortLeaderBoard;
+  };
+
   async getLeaderBoard(path: 'home' | 'away') {
     // const allMatches = await this.getFinishedMatches();
 
@@ -50,11 +81,29 @@ class LeaderBoardService {
 
     const leaderBoard = await this.leaderBoard(allTeams, path);
 
-    return leaderBoard.sort((a, b) => +(b.totalPoints - a.totalPoints)
-    || +(b.totalVictories - a.totalVictories)
-    || +(b.goalsBalance - a.goalsBalance)
-    || +(b.goalsFavor - a.goalsFavor)
-    || +(a.goalsOwn - b.goalsOwn));
+    return this.orderLeaderBoard(leaderBoard);
+  }
+
+  async getOverallLeaderboard(): Promise<leaderboardTeam[]> {
+    const homeLeaderboard = await this.getLeaderBoard('home');
+    const awayLeaderboard = await this.getLeaderBoard('away');
+    const allTeams = await this.modelTeam.findAll();
+
+    const overallLeaderBoard = allTeams.reduce((acc, currTeam) => {
+      const homeTeam = homeLeaderboard
+        .find((team) => team.name === currTeam.teamName) as leaderboardTeam;
+      const awayTeam = awayLeaderboard
+        .find((team) => team.name === currTeam.teamName) as leaderboardTeam;
+
+      const sumHomeAndAwayLeaderboar = this
+        .overallLeaderboard(awayTeam, homeTeam);
+
+      acc.push(sumHomeAndAwayLeaderboar);
+
+      return acc;
+    }, [] as leaderboardTeam[]);
+
+    return this.orderLeaderBoard(overallLeaderBoard);
   }
 }
 
