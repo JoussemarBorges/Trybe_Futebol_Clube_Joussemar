@@ -4,12 +4,11 @@ import LeaderBoardController from '../controllers/LeaderBoardController';
 const leaderBoardRouter = Router();
 
 const leaderBoardController = new LeaderBoardController();
+leaderBoardRouter.get('/away', (req: Request, res: Response) =>
+  leaderBoardController.getLeaderAwayBoard(req, res));
 
 leaderBoardRouter.get('/home', (req: Request, res: Response) =>
-  leaderBoardController.getTablePerformance(req, res));
-
-leaderBoardRouter.get('/away', (req: Request, res: Response) =>
-  leaderBoardController.getTablePerformance(req, res));
+  leaderBoardController.getLeaderHomeBoard(req, res));
 
 leaderBoardRouter.get('/', (req: Request, res: Response) =>
   leaderBoardController.getOverallLeaderboard(req, res));

@@ -4,15 +4,23 @@ import LeaderBoardService from '../services/LeaderBoardService';
 class LeaderBoardController {
   constructor(private leaderBoardService = new LeaderBoardService()) {}
 
-  async getTablePerformance(req: Request, res: Response): Promise<Response> {
-    const path: 'home' | 'away' = req.path.substring(1) as string as 'home' | 'away';
+  async getLeaderAwayBoard(_req: Request, res: Response): Promise<Response> {
+    // const path: 'home' | 'away' = req.path.substring(1) as string as 'home' | 'away';
 
-    const leaderboard = await this.leaderBoardService.getLeaderBoard(path);
+    const leaderboard = await this.leaderBoardService.getLeaderBoard('away');
 
     return res.status(200).json(leaderboard);
   }
 
-  async getOverallLeaderboard(req: Request, res: Response): Promise<Response> {
+  async getLeaderHomeBoard(_req: Request, res: Response): Promise<Response> {
+    // const path: 'home' | 'away' = req.path.substring(1) as string as 'home' | 'away';
+
+    const leaderboard = await this.leaderBoardService.getLeaderBoard('home');
+
+    return res.status(200).json(leaderboard);
+  }
+
+  async getOverallLeaderboard(_req: Request, res: Response): Promise<Response> {
     const overallLeaderBoard = await this.leaderBoardService.getOverallLeaderboard();
 
     return res.status(200).json(overallLeaderBoard);
