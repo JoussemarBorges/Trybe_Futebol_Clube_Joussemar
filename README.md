@@ -1,7 +1,7 @@
 # Projeto Trybe Futebol Clube API (REST, TypeScript, MySQL, TDD)
 
 Esse foi um projeto para criar o back-end de um site informativo sobre partidas e classificações de futebol, utilizando o TDD. Foi utilizando TypeScript e Sequelize para implementar uma API RESTFUL e operações CRUD com banco de dados MySQL. Para validação dos inputs de entrada e do token foram utilizado as bibliotes JOI e JTW respectivamente. Para os testes foi utilizado o mocha com Sinon e Stub. 
-O back-end foi desenvolvido por mim no curso da Trybe, sendo que todo o desenvolvimento Front-End foi feito pela Trybe.
+O back-end foi desenvolvido por mim no curso da Trybe, sendo que todo o desenvolvimento Front-End foi feito pela @Trybe.
 
 ## Técnologias usadas
 <p align="left">
