@@ -1,13 +1,23 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# Projeto Trybe Futebol Clube API (REST, TypeScript, MySQL, TDD)
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+Esse foi um projeto para criar o back-end de um site informativo sobre partidas e classificações de futebol, utilizando o TDD. Foi utilizando TypeScript e Sequelize para implementar uma API RESTFUL e operações CRUD com banco de dados MySQL. Para validação dos inputs de entrada e do token foram utilizado as bibliotes JOI e JTW respectivamente. Para os testes foi utilizado o mocha com Sinon e Stub. 
+O back-end foi desenvolvido por mim no curso da Trybe, sendo que todo o desenvolvimento Front-End foi feito pela Trybe.
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## Técnologias usadas
+<p align="left">
+   <a href="https://www.typescriptlang.org/">
+    <img align="center" alt="TypeScript" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg">
+  </a>
+  <a href="http://expressjs.com/">
+    <img align="center" alt="Express" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg">
+  </a>
+  <a href="https://www.mysql.com/">
+    <img align="center" alt="MySql" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg">
+  </a>
+  <a href="https://sequelize.org/">
+    <img align="center" alt="Sequelize" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-plain-wordmark.svg">
+  </a>
+  <a href="https://mochajs.org/">
+    <img align="center" alt="Mocha" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mocha/mocha-plain.svg">
+  </a>
+</p>
