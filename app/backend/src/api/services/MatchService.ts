@@ -11,32 +11,32 @@ class MatchService {
 
   async getAllMatches(inProgress?: boolean | undefined): Promise<Matche[]> {
     if (inProgress === undefined) {
-      const result = await this.model.findAll({
+      const matches = await this.model.findAll({
         include: [
           { model: Team, as: 'homeTeam', attributes: ['teamName'] },
           { model: Team, as: 'awayTeam', attributes: ['teamName'] },
         ],
       });
-      return result;
+      return matches;
     }
-    const result = await this.model.findAll({
+    const matches = await this.model.findAll({
       include: [
         { model: Team, as: 'homeTeam', attributes: ['teamName'] },
         { model: Team, as: 'awayTeam', attributes: ['teamName'] },
       ],
       where: { inProgress },
     });
-    return result;
+    return matches;
   }
 
   async finishMatche(id: number): Promise<number[] | undefined> {
-    const result = await this.model.update({ inProgress: false }, { where: { id } });
+    const isFinished = await this.model.update({ inProgress: false }, { where: { id } });
 
-    return result;
+    return isFinished;
   }
 
   async editMatche(id: number, body: IbodyEditMatche): Promise<number[]> {
-    const result = await this.model
+    const updateMatche = await this.model
       .update(
         {
           homeTeamGoals: body.homeTeamGoals,
@@ -44,7 +44,7 @@ class MatchService {
         },
         { where: { id } },
       );
-    return result;
+    return updateMatche;
   }
 
   async createMatch(inputMatch: IBodyMatcheCreate): Promise<Matche> {
